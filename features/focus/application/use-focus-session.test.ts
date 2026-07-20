@@ -27,4 +27,18 @@ describe('useFocusSession', () => {
     expect(result.current.distractions).toHaveLength(1);
     expect(result.current.distractions[0].note).toBe('check slack');
   });
+
+  it('does not add a distraction if called outside the pivoting flow', () => {
+  const { result } = renderHook(() => useFocusSession());
+
+  act(() => {
+    result.current.send('START');
+  });
+  act(() => {
+    result.current.park('should not be added');
+  });
+
+  expect(result.current.distractions).toHaveLength(0);
+    });
+
 });

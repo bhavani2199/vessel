@@ -25,14 +25,16 @@ export function useFocusSession() {
   }
 
   function park(note: string) {
-    setDistractions((prev) => [...prev, { note, createdAt: Date.now() }]);
-    dispatch('PARK');
-    dispatch('RESUME');
-  }
+  if (state !== 'pivoting') return;
+  setDistractions((prev) => [...prev, { note, createdAt: Date.now() }]);
+  dispatch('PARK');
+  dispatch('RESUME');
+}
 
-  function dismiss() {
-    dispatch('DISMISS');
-  }
+function dismiss() {
+  if (state !== 'pivoting') return;
+  dispatch('DISMISS');
+}
 
   return { state, secondsLeft, totalSeconds: SPRINT_SECONDS, send, park, dismiss, distractions };
 }
