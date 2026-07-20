@@ -3,9 +3,11 @@ import { transition, type FocusState, type FocusEvent } from '../domain/focus-st
 
 const SPRINT_SECONDS = 15 * 60;
 
+
 export function useFocusSession() {
   const [state, dispatch] = useReducer(transition, 'idle');
   const [secondsLeft, setSecondsLeft] = useState(SPRINT_SECONDS);
+  const [distractions, setDistractions] = useState<{ note: string; createdAt: number }[]>([]);
 
   useEffect(() => {
     if (state !== 'focusing') return;
@@ -22,5 +24,14 @@ export function useFocusSession() {
     dispatch(event);
   }
 
-  return { state, secondsLeft, totalSeconds: SPRINT_SECONDS, send };
+  function park(note: string) {
+    setDistractions((prev) => [...prev, { note, createdAt: Date.now() }]);
+    dispatch('PARK');
+  }
+
+  function dismiss() {
+    dispatch('DISMISS');
+  }
+
+  return { state, secondsLeft, totalSeconds: SPRINT_SECONDS, send, park, dismiss, distractions };
 }
