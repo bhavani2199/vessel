@@ -27,6 +27,7 @@ export function useFocusSession() {
   function park(note: string) {
     setDistractions((prev) => [...prev, { note, createdAt: Date.now() }]);
     dispatch('PARK');
+    dispatch('RESUME');
   }
 
   function dismiss() {

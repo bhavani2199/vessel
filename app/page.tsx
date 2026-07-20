@@ -6,7 +6,7 @@ import { PivotModal } from '@/features/focus/components/pivot-modal';
 
 export default function Home() {
   const { state, secondsLeft, totalSeconds, send, park, dismiss, distractions } = useFocusSession();
-
+  
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-zinc-950">
       <RingTimer secondsLeft={secondsLeft} totalSeconds={totalSeconds} />
@@ -22,11 +22,11 @@ export default function Home() {
             <button onClick={() => send('PAUSE')} className="rounded-lg bg-zinc-700 px-4 py-2 text-white">
               Pause
             </button>
-            <button onClick={() => send('END')} className="rounded-lg bg-zinc-700 px-4 py-2 text-white">
-              End
-            </button>
             <button onClick={() => send('DISTRACTED')} className="rounded-lg bg-zinc-700 px-4 py-2 text-white">
               Distracted?
+            </button>
+            <button onClick={() => send('END')} className="rounded-lg bg-zinc-700 px-4 py-2 text-white">
+              End
             </button>
           </>
         )}
